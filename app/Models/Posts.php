@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,10 @@ class Posts extends Model
         'deleted'
     ];
 
+    protected $appends = [
+        'created_from'
+    ];
+
     public function  User()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -30,6 +35,13 @@ class Posts extends Model
     {
         return $this->belongsTo(Hotels::class, 'hotel_id');
     }
+
+
+    public function getCreatedFromAttribute()
+    {
+        return $this->created_at->diffForHumans(Carbon::now());
+    }
+
 
     public function scopeSearch($query, $value)
     {

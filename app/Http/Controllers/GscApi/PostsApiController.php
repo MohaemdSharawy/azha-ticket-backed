@@ -15,7 +15,7 @@ class PostsApiController extends Controller
 
     public function posts()
     {
-        $posts  =  Posts::where('hotel_id', $this->get_client_property(Auth::id()))->get();
+        $posts  =  Posts::where('hotel_id', $this->get_client_property(Auth::id()))->whit(['User'])->orderBy('id', 'DESC')->get();
         return response()->json([
             'posts' => $posts,
         ], 200);
